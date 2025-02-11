@@ -1,0 +1,6 @@
+@ConcessionariaDuZe_HostAddress = http://localhost:5198
+
+GET {{ConcessionariaDuZe_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
