@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddDbContext<ConcessionariaDuZe>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Somee"))); // Altere para o nome correto do DbContext
+builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Somee")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -64,7 +64,7 @@ builder.Services.AddIdentityApiEndpoints<IdentityUser>(options =>
     // por padrão usar options
     //dessa forma é possivel alterar as configurações padrão do Identity Framework e custumizar a aplicação
 })
-     .AddEntityFrameworkStores<ConcessionariaDuZe>() // Altere para o nome correto do DbContext
+     .AddEntityFrameworkStores<DBContext>() // Altere para o nome correto do DbContext
     .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication();
