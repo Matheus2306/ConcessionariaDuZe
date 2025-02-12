@@ -16,5 +16,6 @@ namespace ConcessionariaDuZe.Data
         public DbSet<ConcessionariaDuZe.Model.itemCompra> itemCompra { get; set; } = default!;
         public DbSet<ConcessionariaDuZe.Model.Itemvenda> Itemvenda { get; set; } = default!;
         public DbSet<ConcessionariaDuZe.Model.ServicoPrestado> ServicoPrestado { get; set; } = default!;
+        public DbSet<ConcessionariaDuZe.Model.servico> servico { get; set; } = default!;
     }
 }
