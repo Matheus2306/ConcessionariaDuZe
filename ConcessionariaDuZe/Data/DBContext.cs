@@ -12,5 +12,6 @@ namespace ConcessionariaDuZe.Data
         public DbSet<Veiculo> Veiculos { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<ConcessionariaDuZe.Model.Compra> Compra { get; set; } = default!;
+        public DbSet<ConcessionariaDuZe.Model.Fornecedor> Fornecedor { get; set; } = default!;
     }
 }
