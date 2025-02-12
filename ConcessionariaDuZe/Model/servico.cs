@@ -1,6 +1,6 @@
 ﻿namespace ConcessionariaDuZe.Model
 {
-    public class servicos
+    public class servico
     {
         public Guid ServicoId { get; set; }
         public string TipoServico { get; set; }

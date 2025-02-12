@@ -7,6 +7,6 @@
         public Guid UsuarioId { get; set; }
         public Usuario? Usuario { get; set; }
         public Guid ServicoId { get; set; }
-        public servicos? Servico { get; set; }
+        public servico? Servico { get; set; }
     }
 }
