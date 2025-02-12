@@ -9,6 +9,7 @@ namespace ConcessionariaDuZe.Data
         public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
         }
-        public DbSet<Veiculos> Veiculos { get; set; }
+        public DbSet<Veiculo> Veiculos { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
     }
 }
