@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ConcessionariaDuZe.Data;
 using ConcessionariaDuZe.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConcessionariaDuZe.Controllers
 {
@@ -21,6 +22,7 @@ namespace ConcessionariaDuZe.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: api/Itemvendas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Itemvenda>>> GetItemvenda()
@@ -84,6 +86,7 @@ namespace ConcessionariaDuZe.Controllers
             return CreatedAtAction("GetItemvenda", new { id = itemvenda.ItemVendaId }, itemvenda);
         }
 
+        [Authorize(Roles = "Admin")]
         // DELETE: api/Itemvendas/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItemvenda(Guid id)
