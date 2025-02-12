@@ -6,8 +6,8 @@ namespace ConcessionariaDuZe.Model
     {
         public Guid UsuarioId { get; set; }
         public string Nome { get; set; }
-        public string cpf { get; set; }
-        public string idade { get; set; }
+        public string CPF { get; set; }
+        public string Email { get; set; }
         public Guid? UserId { get; set; }
         public IdentityUser? User { get; set; }
     }

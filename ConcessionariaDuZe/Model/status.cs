@@ -1,8 +1,8 @@
 ﻿namespace ConcessionariaDuZe.Model
 {
-    public class status
+    public class Status
     {
-        public Guid statusId { get; set; }
-        public string statusNome { get; set; }
+        public Guid StatusId { get; set; }
+        public string StatusNome { get; set; }
     }
 }
