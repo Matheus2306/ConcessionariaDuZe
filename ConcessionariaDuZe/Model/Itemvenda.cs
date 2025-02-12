@@ -2,7 +2,7 @@
 
 namespace ConcessionariaDuZe.Model
 {
-    public class itamvenda
+    public class Itemvenda
     {
         public Guid ItemVendaId { get; set; }
         public Guid VendaId { get; set; }
