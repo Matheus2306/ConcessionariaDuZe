@@ -7,5 +7,7 @@
         public string formaDePagamento { get; set; }
         public Guid UsuarioId { get; set; }
         public Usuario? usuario { get; set; }
+        public Guid StatusId { get; set; }
+        public Status? Status { get; set; }
     }
 }
