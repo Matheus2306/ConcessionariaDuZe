@@ -22,7 +22,8 @@ namespace ConcessionariaDuZe.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = 'Admin')]
+        [Authorize(Roles = "Admin")]
+
         // GET: api/Compras
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Compra>>> GetCompra()
@@ -85,6 +86,8 @@ namespace ConcessionariaDuZe.Controllers
 
             return CreatedAtAction("GetCompra", new { id = compra.CompraId }, compra);
         }
+
+        [Authorize(Roles = "Admin")]
 
         // DELETE: api/Compras/5
         [HttpDelete("{id}")]

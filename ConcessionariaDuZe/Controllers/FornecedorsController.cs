@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ConcessionariaDuZe.Data;
 using ConcessionariaDuZe.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConcessionariaDuZe.Controllers
 {
@@ -20,7 +21,7 @@ namespace ConcessionariaDuZe.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: api/Fornecedors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Fornecedor>>> GetFornecedor()
@@ -84,6 +85,7 @@ namespace ConcessionariaDuZe.Controllers
             return CreatedAtAction("GetFornecedor", new { id = fornecedor.FornecedorId }, fornecedor);
         }
 
+        [Authorize(Roles = "Admin")]
         // DELETE: api/Fornecedors/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFornecedor(Guid id)
