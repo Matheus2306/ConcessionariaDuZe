@@ -9,6 +9,7 @@ using ConcessionariaDuZe.Data;
 using ConcessionariaDuZe.Model;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConcessionariaDuZe.Controllers
 {
@@ -25,6 +26,7 @@ namespace ConcessionariaDuZe.Controllers
             _userManager = userManager;
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: api/Usuarios
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()
@@ -105,6 +107,8 @@ namespace ConcessionariaDuZe.Controllers
             return CreatedAtAction("GetUsuario", new { id = usuario.UsuarioId }, usuario);
         }
 
+
+        [Authorize(Roles = "Admin")]
         // DELETE: api/Usuarios/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuario(Guid id)
