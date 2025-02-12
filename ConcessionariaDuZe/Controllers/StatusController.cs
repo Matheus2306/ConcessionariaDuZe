@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ConcessionariaDuZe.Data;
 using ConcessionariaDuZe.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConcessionariaDuZe.Controllers
 {
@@ -21,6 +22,8 @@ namespace ConcessionariaDuZe.Controllers
             _context = context;
         }
 
+
+        [Authorize(Roles = "Admin")]
         // GET: api/Status
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Status>>> GetStatus()
@@ -84,6 +87,8 @@ namespace ConcessionariaDuZe.Controllers
             return CreatedAtAction("GetStatus", new { id = status.StatusId }, status);
         }
 
+
+        [Authorize(Roles = "Admin")]
         // DELETE: api/Status/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStatus(Guid id)
