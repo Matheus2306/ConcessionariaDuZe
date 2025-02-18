@@ -104,5 +104,74 @@ namespace ConcessionariaDuZe.Controllers
         {
             return _context.itemCompra.Any(e => e.ItemCompraId == id);
         }
+
+        // POST: api/itemCompras/AddVehicleToOrder
+        [HttpPost("AddVehicleToOrder")]
+        public async Task<IActionResult> AddVehicleToOrder(Guid compraId, Guid veiculoId, double quantidade)
+        {
+            var compra = await _context.Compra.FindAsync(compraId);
+            if (compra == null)
+            {
+                return NotFound("Compra não encontrada.");
+            }
+
+            var veiculo = await _context.Veiculos.FindAsync(veiculoId);
+            if (veiculo == null)
+            {
+                return NotFound("Veículo não encontrado.");
+            }
+
+            var itemCompra = new itemCompra
+            {
+                ItemCompraId = Guid.NewGuid(),
+                CompraId = compraId,
+                VeiculoId = veiculoId,
+                Quantidade = quantidade
+            };
+
+            _context.itemCompra.Add(itemCompra);
+            await _context.SaveChangesAsync();
+
+            return Ok(itemCompra);
+        }
+
+        // POST: api/itemCompras/AddVehiclesWhenCompleted
+        [HttpPost("AddVehiclesWhenCompleted")]
+        public async Task<IActionResult> AddVehiclesWhenCompleted(Guid compraId, List<Guid> veiculoIds)
+        {
+            var compra = await _context.Compra.Include(c => c.Status).FirstOrDefaultAsync(c => c.CompraId == compraId);
+            if (compra == null)
+            {
+                return NotFound("Compra não encontrada.");
+            }
+
+            if (compra.Status.StatusNome != "concluído")
+            {
+                return BadRequest("O status da compra não é 'concluído'.");
+            }
+
+            foreach (var veiculoId in veiculoIds)
+            {
+                var veiculo = await _context.Veiculos.FindAsync(veiculoId);
+                if (veiculo == null)
+                {
+                    return NotFound($"Veículo com ID {veiculoId} não encontrado.");
+                }
+
+                var itemCompra = new itemCompra
+                {
+                    ItemCompraId = Guid.NewGuid(),
+                    CompraId = compraId,
+                    VeiculoId = veiculoId,
+                    Quantidade = 0
+                };
+
+                _context.itemCompra.Add(itemCompra);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Veículos adicionados com sucesso.");
+        }
     }
 }
