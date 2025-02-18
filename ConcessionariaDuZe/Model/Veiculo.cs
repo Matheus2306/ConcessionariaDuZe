@@ -7,6 +7,7 @@ namespace ConcessionariaDuZe.Model
     {
         public Guid VeiculoId { get; set; }
         [Required(ErrorMessage = "O campo marca não pode ser nulo")]
+        public string Nome { get; set; }
         public string Marca { get; set; }
         [Required(ErrorMessage = "O campo modelo não pode ser nulo")]
         public string Modelo { get; set; }

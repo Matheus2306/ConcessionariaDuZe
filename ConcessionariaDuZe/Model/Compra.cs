@@ -9,5 +9,7 @@
         public Fornecedor Fornecedor { get; set; }
         public Guid StatusId { get; set; }
         public Status Status { get; set; }
+        public Guid FormaDePagamentoId { get; set; }
+        public FormaDePagamento FormaDePagamento { get; set; }
     }
 }

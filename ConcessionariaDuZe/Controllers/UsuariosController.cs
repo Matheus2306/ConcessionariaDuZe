@@ -7,9 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ConcessionariaDuZe.Data;
 using ConcessionariaDuZe.Model;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ConcessionariaDuZe.Controllers
 {
@@ -18,12 +15,10 @@ namespace ConcessionariaDuZe.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly DBContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public UsuariosController(DBContext context, UserManager<IdentityUser> userManager)
+        public UsuariosController(DBContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
         [Authorize(Roles = "Admin")]
@@ -79,28 +74,11 @@ namespace ConcessionariaDuZe.Controllers
             return NoContent();
         }
 
-        // Recupera o id do usuário logado
-
-        //*********************************************//
-
-
         // POST: api/Usuarios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
-            // Recupera o id do usuário logado
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId == null)
-            {
-                return BadRequest();
-            }
-            //*********************************************//
-
-            // Atribui o id do usuário logado ao usuário que está sendo cadastrado
-            usuario.UserId = Guid.Parse(userId);
-
-
             _context.Usuario.Add(usuario);
             await _context.SaveChangesAsync();
 

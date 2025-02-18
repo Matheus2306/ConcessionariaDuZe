@@ -105,6 +105,27 @@ namespace ConcessionariaDuZe.Controllers
             return NoContent();
         }
 
+        // GET: api/Veiculos/search
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Veiculo>>> SearchVeiculos(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return BadRequest("Search term cannot be empty.");
+            }
+
+            var veiculos = await _context.Veiculos
+                .Where(v => v.Nome.Contains(searchTerm) || v.Marca.Contains(searchTerm))
+                .ToListAsync();
+
+            if (veiculos == null || veiculos.Count == 0)
+            {
+                return NotFound("No vehicles found matching the search term.");
+            }
+
+            return veiculos;
+        }
+
         private bool VeiculoExists(Guid id)
         {
             return _context.Veiculos.Any(e => e.VeiculoId == id);

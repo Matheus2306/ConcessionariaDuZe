@@ -83,6 +83,9 @@ namespace ConcessionariaDuZe.Controllers
             _context.Itemvenda.Add(itemvenda);
             await _context.SaveChangesAsync();
 
+            // Atualiza o valor total da venda
+            await AtualizarValorTotalVenda(itemvenda.VendaId);
+
             return CreatedAtAction("GetItemvenda", new { id = itemvenda.ItemVendaId }, itemvenda);
         }
 
@@ -100,12 +103,86 @@ namespace ConcessionariaDuZe.Controllers
             _context.Itemvenda.Remove(itemvenda);
             await _context.SaveChangesAsync();
 
+            // Atualiza o valor total da venda
+            await AtualizarValorTotalVenda(itemvenda.VendaId);
+
             return NoContent();
         }
 
         private bool ItemvendaExists(Guid id)
         {
             return _context.Itemvenda.Any(e => e.ItemVendaId == id);
+        }
+
+        // Método para atualizar o valor total da venda
+        private async Task AtualizarValorTotalVenda(Guid vendaId)
+        {
+            var venda = await _context.Venda.FindAsync(vendaId);
+            if (venda != null)
+            {
+                venda.ValorTotal = await _context.Itemvenda
+                    .Where(iv => iv.VendaId == vendaId)
+                    .SumAsync(iv => iv.ValorTotal);
+
+                _context.Entry(venda).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        // PUT: api/Itemvendas/ConcluirVenda/5
+        [HttpPut("ConcluirVenda/{id}")]
+        public async Task<IActionResult> ConcluirVenda(Guid id)
+        {
+            var venda = await _context.Venda.FindAsync(id);
+            if (venda == null)
+            {
+                return NotFound();
+            }
+
+            // Atualiza o status da venda para "concluído"
+            var statusConcluido = await _context.Status.FirstOrDefaultAsync(s => s.StatusNome == "concluído");
+            if (statusConcluido == null)
+            {
+                return BadRequest("Status 'concluído' não encontrado.");
+            }
+
+            venda.StatusId = statusConcluido.StatusId;
+            _context.Entry(venda).State = EntityState.Modified;
+
+            // Atualiza o estoque dos veículos
+            var itensVenda = await _context.Itemvenda.Where(iv => iv.VendaId == id).ToListAsync();
+            foreach (var item in itensVenda)
+            {
+                var veiculo = await _context.Veiculos.FindAsync(item.VeiculoId);
+                if (veiculo != null)
+                {
+                    veiculo.Estoque -= (int)item.Quantidade;
+                    _context.Entry(veiculo).State = EntityState.Modified;
+                }
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!VendaExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool VendaExists(Guid id)
+        {
+            return _context.Venda.Any(e => e.VendaId == id);
         }
     }
 }
