@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ConcessionariaDuZe.Data;
 using ConcessionariaDuZe.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConcessionariaDuZe.Controllers
 {
@@ -89,6 +90,7 @@ namespace ConcessionariaDuZe.Controllers
 
         // DELETE: api/Itemvendas/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteItemvenda(Guid id)
         {
             var itemvenda = await _context.Itemvenda.FindAsync(id);

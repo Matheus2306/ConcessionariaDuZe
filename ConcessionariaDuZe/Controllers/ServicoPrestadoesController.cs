@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ConcessionariaDuZe.Data;
 using ConcessionariaDuZe.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConcessionariaDuZe.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "vendedor")]
     public class ServicoPrestadoesController : ControllerBase
     {
         private readonly DBContext _context;
@@ -23,6 +25,7 @@ namespace ConcessionariaDuZe.Controllers
 
         // GET: api/ServicoPrestadoes
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<ServicoPrestado>>> GetServicoPrestado()
         {
             return await _context.ServicoPrestado.ToListAsync();
@@ -86,6 +89,7 @@ namespace ConcessionariaDuZe.Controllers
 
         // DELETE: api/ServicoPrestadoes/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteServicoPrestado(Guid id)
         {
             var servicoPrestado = await _context.ServicoPrestado.FindAsync(id);

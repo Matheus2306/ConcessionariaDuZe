@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ConcessionariaDuZe.Data;
 using ConcessionariaDuZe.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConcessionariaDuZe.Controllers
 {
@@ -23,6 +24,7 @@ namespace ConcessionariaDuZe.Controllers
 
         // GET: api/FormaDePagamentos
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<FormaDePagamento>>> GetFormaDePagamento()
         {
             return await _context.FormaDePagamento.ToListAsync();
@@ -86,6 +88,7 @@ namespace ConcessionariaDuZe.Controllers
 
         // DELETE: api/FormaDePagamentos/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteFormaDePagamento(Guid id)
         {
             var formaDePagamento = await _context.FormaDePagamento.FindAsync(id);
