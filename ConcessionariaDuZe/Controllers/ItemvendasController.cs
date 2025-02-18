@@ -12,8 +12,6 @@ namespace ConcessionariaDuZe.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
-    [ApiController]
     public class ItemvendasController : ControllerBase
     {
         private readonly DBContext _context;
