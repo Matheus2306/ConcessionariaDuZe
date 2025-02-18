@@ -163,10 +163,14 @@ namespace ConcessionariaDuZe.Controllers
                     ItemCompraId = Guid.NewGuid(),
                     CompraId = compraId,
                     VeiculoId = veiculoId,
-                    Quantidade = 0
+                    Quantidade = 0 // Supondo que a quantidade seja 1 por padrão
                 };
 
                 _context.itemCompra.Add(itemCompra);
+
+                // Atualiza o estoque do veículo
+                veiculo.Estoque += 1;
+                _context.Entry(veiculo).State = EntityState.Modified;
             }
 
             await _context.SaveChangesAsync();

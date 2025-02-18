@@ -37,8 +37,6 @@ namespace ConcessionariaDuZe.Controllers
             if (itemvenda == null)
             {
                 return NotFound();
-
-
             }
 
             return itemvenda;
@@ -147,6 +145,18 @@ namespace ConcessionariaDuZe.Controllers
 
             venda.StatusId = statusConcluido.StatusId;
             _context.Entry(venda).State = EntityState.Modified;
+
+            // Atualiza o estoque dos veículos
+            var itensVenda = await _context.Itemvenda.Where(iv => iv.VendaId == id).ToListAsync();
+            foreach (var item in itensVenda)
+            {
+                var veiculo = await _context.Veiculos.FindAsync(item.VeiculoId);
+                if (veiculo != null)
+                {
+                    veiculo.Estoque -= (int)item.Quantidade;
+                    _context.Entry(veiculo).State = EntityState.Modified;
+                }
+            }
 
             try
             {
