@@ -10,5 +10,7 @@ namespace ConcessionariaDuZe.Model
         public string Email { get; set; }
         public Guid? UserId { get; set; }
         public IdentityUser? User { get; set; }
+        public Guid FormaDePagamentoId { get; set; }
+        public FormaDePagamento? FormaDePagamento { get; set; }
     }
 }
