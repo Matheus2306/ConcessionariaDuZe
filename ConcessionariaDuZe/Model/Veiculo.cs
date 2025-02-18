@@ -15,15 +15,10 @@ namespace ConcessionariaDuZe.Model
         public string Ano { get; set; }
         [Required(ErrorMessage = "O campo valor não pode ser nulo")]
         public decimal Valor { get; set; }
-        [Required(ErrorMessage = "O campo quilometragem não pode ser nulo")]
         public decimal Quilometragem { get; set; }
-        [Required(ErrorMessage = "O campo quilometragem não pode ser nulo")]
         public string TipoDeCombustivel { get; set; }
-        [Required(ErrorMessage = "O campo quilometragem não pode ser nulo")]
         public string Transmissao { get; set; }
-        [Required(ErrorMessage = "O campo quilometragem não pode ser nulo")]
         public int Estoque { get; set; }
-        [Required(ErrorMessage = "O campo quilometragem não pode ser nulo")]
         public string Imagem { get; set; }
     }
 }
