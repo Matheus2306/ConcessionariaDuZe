@@ -13,7 +13,7 @@ namespace ConcessionariaDuZe.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class FornecedorsController : ControllerBase
     {
         private readonly DBContext _context;

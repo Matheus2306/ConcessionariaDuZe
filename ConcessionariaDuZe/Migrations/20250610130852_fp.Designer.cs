@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConcessionariaDuZe.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20250218164326_initial")]
-    partial class initial
+    [Migration("20250610130852_fp")]
+    partial class fp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,16 +183,8 @@ namespace ConcessionariaDuZe.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("FormaDePagamentoId")
+                    b.Property<Guid?>("FormaDePagamentoId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -591,9 +583,7 @@ namespace ConcessionariaDuZe.Migrations
                 {
                     b.HasOne("ConcessionariaDuZe.Model.FormaDePagamento", "FormaDePagamento")
                         .WithMany()
-                        .HasForeignKey("FormaDePagamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FormaDePagamentoId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
